@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Connector</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; }
+        code { background: #f5f5f5; padding: 0.2em 0.4em; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>GitHub&nbsp;Connector&nbsp;API</h1>
+    <p class="tagline">
+        A lightweight REST service that aggregates recent commit activity for any
+        public GitHub&nbsp;user or organisation.
+    </p>
+</header>
+
+<section>
+    <h2>Base URL</h2>
+    <p><code>http://&lt;host&gt;:8080</code></p>
+</section>
+
+<section>
+    <h2>Endpoints</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Verb</th>
+            <th>Path</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>GET</td>
+            <td><code>/api/github/<i>{userOrOrg}</i></code></td>
+            <td>Fetch recent commit activity (max 20 commits per repository).</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td><code>/api/github/<i>{userOrOrg}</i>/summary</code></td>
+            <td>Light-weight metadata only (counts, timestamp).</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td><code>/api/github/<i>{userOrOrg}</i>/<i>{repoName}</i></code></td>
+            <td>Activity for a single repository.</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td><code>/api/github/<i>{userOrOrg}</i>/refresh</code></td>
+            <td>Explicitly refresh cached data.</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td><code>/api/github/health</code></td>
+            <td>Simple health-check endpoint.</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Example Request</h2>
+    <pre><code>GET /api/github/google</code></pre>
+
+    <h3>Example Response&nbsp;(truncated)</h3>
+<pre><code>{
+  "meta": {
+    "totalRepos": 327,
+    "totalCommits": 6540,
+    "fetchedAtIso": "2024-05-29T14:22:18.013Z"
+  },
+  "data": [
+    {
+      "repositoryName": "guava",
+      "commits": [
+        {
+          "message": "Fix ImmutableList builder bug",
+          "author": "Alice",
+          "timestamp": "2024-05-27T19:53:01Z"
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+}</code></pre>
+</section>
+
+<footer>
+    <p>
+        Need help? See the source on
+        <a href="https://github.com/iamanandalok/github-connector" target="_blank">GitHub</a>.
+    </p>
+</footer>
+
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,81 @@
+#################################################################
+#  Application Configuration (Spring Boot YAML)
+#  -------------------------------------------------------------
+
+# ---------------------------------------------------------------
+# GitHub API properties
+# ---------------------------------------------------------------
+github:
+  #
+  # Example: export GITHUB_TOKEN=ghp_****************************
+  token: ${GITHUB_TOKEN:}
+
+  # Base URL for GitHub REST API
+  api-base-url: https://api.github.com
+
+  # Pagination controls
+  repos-page-size: 100    # Number of repositories per page
+  commits-page-size: 20   # Number of commits per repository
+
+
+  max-repos: 5             # ↓ Reduced from 20 → Processes at most 5 repositories
+  max-wait-time-ms: 30000  # ↓ Reduced from 120 000 ms → Skip a repo after 30 s wait
+  request-timeout-ms: 60000 # ↓ Reduced from 300 000 ms → Hard timeout after 1 min
+
+# ---------------------------------------------------------------
+# Server configuration
+# ---------------------------------------------------------------
+server:
+  # Port where the Spring Boot app will listen
+  port: 8080
+
+# ---------------------------------------------------------------
+# Logging configuration
+# ---------------------------------------------------------------
+logging:
+  level:
+    # Root log level
+    root: INFO
+    # Package-specific log level for our connector code
+    com.github_connector: DEBUG
+
+# ---------------------------------------------------------------
+# Management / Actuator endpoints
+# ---------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      # Only expose selected endpoints
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      # Show full health details
+      show-details: always
+
+# Base path for all actuator endpoints
+management.endpoints.web.base-path: /actuator
+
+# ---------------------------------------------------------------
+# Metrics tuning
+# ---------------------------------------------------------------
+# Increase the maximum number of distinct URI tags that can be produced
+# by Micrometer for both client-side (RestTemplate/WebClient) and
+# server-side (Spring-MVC) HTTP metrics.  This prevents the
+# “Reached the maximum number of URI tags for 'http.client.requests'”
+# warning when many distinct path variables are used (e.g. different
+# GitHub usernames).
+management.metrics:
+  web:
+    client:
+      max-uri-tags: 1000   # default is 100; raise limit
+    server:
+      max-uri-tags: 1000   # default is 100; raise limit
+  # If you don’t need the detailed HTTP client metrics at all,
+  # you can disable them by uncommenting the line below.
+  # enable.http.client.requests: false
+
+
+# ---------------------------------------------------------------
+# End of configuration
+# ---------------------------------------------------------------
