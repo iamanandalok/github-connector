@@ -1,6 +1,5 @@
 package com.github_connector.github_connector.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.ZonedDateTime;
 
 public class Author {
