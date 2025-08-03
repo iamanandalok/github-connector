@@ -1,9 +1,8 @@
 package com.github_connector.github_connector.config;
 
-import io.micrometer.core.instrument.Tag;
-import io.micrometer.core.instrument.config.MeterFilter;
+import io.micrometer.core.instrument.Meter.Id;
 import io.micrometer.core.instrument.Tags;
-import io.micrometer.core.instrument.Meter.Id;  // <- Added missing import
+import io.micrometer.core.instrument.config.MeterFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

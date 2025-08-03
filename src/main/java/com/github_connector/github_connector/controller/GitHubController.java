@@ -1,22 +1,14 @@
 package com.github_connector.github_connector.controller;
 
-import com.github_connector.github_connector.model.ActivityResponse;
-import com.github_connector.github_connector.model.CommitActivity;
-import com.github_connector.github_connector.model.Meta;
-import com.github_connector.github_connector.model.RateLimitInfo;
-import com.github_connector.github_connector.model.RateLimitResponse;
-import com.github_connector.github_connector.model.RepoActivity;
-import com.github_connector.github_connector.model.RepositoryInfo;
-import com.github_connector.github_connector.model.TokenTestResult;
+import com.github_connector.github_connector.model.*;
 import com.github_connector.github_connector.service.GitHubConnectorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin // allow basic CORS; tweak origins in config if needed

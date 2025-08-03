@@ -1,28 +1,21 @@
 package com.github_connector.github_connector.service;
 
 import com.github_connector.github_connector.config.GitHubProperties;
-import com.github_connector.github_connector.model.RepositoryInfo;
-import com.github_connector.github_connector.model.CommitInfo;
-import com.github_connector.github_connector.model.CommitDetail;
-import com.github_connector.github_connector.model.Author;
-import com.github_connector.github_connector.model.RepoActivity;
-import com.github_connector.github_connector.model.CommitActivity;
-import com.github_connector.github_connector.model.RateLimitInfo;
-import com.github_connector.github_connector.model.ResourceLimits;
-import com.github_connector.github_connector.model.TokenTestResult;
+import com.github_connector.github_connector.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.time.Instant;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.Date;   
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

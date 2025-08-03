@@ -1,7 +1,5 @@
 package com.github_connector.github_connector.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class CommitDetail {
     private String message;
     private Author author;    // now refers to the top-level Author class

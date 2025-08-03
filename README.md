@@ -168,23 +168,6 @@ logging:
     com.github_connector: DEBUG     # Package-specific logging
 ```
 
-## Performance Testing
-
-The connector is configured for fast local testing with optimized settings:
-
-- **Quick Endpoint**: Use `/api/github/{userOrOrg}/quick` for very fast testing that processes only the first repository found
-- **Reduced Repository Limit**: Only processes up to 5 repositories (down from 20 in production)
-- **Shorter Wait Times**: Waits at most 30 seconds on rate limits (down from 2 minutes)
-- **Faster Timeouts**: Hard timeout of 1 minute for entire requests (down from 5 minutes)
-
-To restore production settings, update `application.yml`:
-
-```yaml
-github:
-  max-repos: 20                     # Restore to process more repositories
-  max-wait-time-ms: 120000          # Restore to 2 minutes wait time
-  request-timeout-ms: 300000        # Restore to 5 minutes timeout
-```
 
 These changes will prioritize completeness over speed for production use.
 
@@ -212,45 +195,7 @@ Force refresh data:
 curl -X POST http://localhost:8080/api/github/octocat/refresh
 ```
 
-### Java Client Example
 
-```java
-RestTemplate restTemplate = new RestTemplate();
-String url = "http://localhost:8080/api/github/octocat";
-ResponseEntity<ActivityResponse> response = restTemplate.getForEntity(url, ActivityResponse.class);
-ActivityResponse activity = response.getBody();
-```
-
-## Performance Considerations
-
-- Rate limiting uses exponential backoff to avoid GitHub API restrictions
-- Consider implementing caching for frequently accessed users/organizations
-
-## Performance & Rate Limiting
-
-The connector contains built-in safeguards to keep response times predictable even
-for very large organizations:
-
-| Property | Default | Purpose |
-|----------|---------|---------|
-| `github.max-repos` | **5** | Upper-bound on repositories processed per request. Currently optimized for testing (production value: 20). |
-| `github.max-wait-time-ms` | **30 000 ms (30 sec)** | If GitHub responds with a rate-limit that requires waiting longer than this value, the affected repository is skipped. Currently optimized for testing (production value: 120 000 ms). |
-| `github.request-timeout-ms` | **60 000 ms (1 min)** | Hard timeout for the entire user/org request. When exceeded, remaining repositories are skipped and a partial result is returned. Currently optimized for testing (production value: 300 000 ms). |
-
-These values can be overridden in `application.yml` or via environment variables
-to suit your deployment's latency and data-volume requirements.
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
